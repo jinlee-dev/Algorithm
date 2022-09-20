@@ -44,5 +44,6 @@ int main()
 
 	QuickSort(pInput, 0, count - 1);
 	printf("%d", pInput[count - cutLine]);
+	delete[] pInput;
 	return 0;
 }

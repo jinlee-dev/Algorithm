@@ -32,5 +32,7 @@ int main()
     {
         printf("%d\n", pInput[i]);
     }
+
+    delete[] pInput;
     return 0;
 }
