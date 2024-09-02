@@ -1,41 +1,32 @@
 import sys
 
-c = int(sys.stdin.readline())
-l = []
+n = int(sys.stdin.readline().rstrip())
+u = [int(sys.stdin.readline().rstrip()) for _ in range(n)]
 
-for i in range(c):
-    l.append(int(sys.stdin.readline()))
+arr = []
+res = 0
+for i in range(n):
+    for j in range(i, n):
+        arr.append(u[i] + u[j])
+arr.sort()
 
-
-l.sort()
-l2 = []
-
-for i in range(c):
-    for j in range(i + 1, c):
-        l2.append(l[i] + l[j])
-
-def binSearch(arr, target):
-    s = 0
-    e = len(arr)
-    while s < e:
-        mid = (s + e) // 2
-        if arr[mid] < target:
-            s = mid + 1
+def bin_search(target):
+    start = 0
+    end = len(arr) - 1
+    while start <= end:
+        mid = (start + end) // 2
+        if arr[mid] == target:
+            return True
+        elif arr[mid] < target:
+            start = mid + 1
         elif arr[mid] > target:
-            e = mid - 1
-        else:
-            return mid    
-    return -1
+            end = mid - 1
+    return False
 
-l2.sort()
-ret = 0
-for i in range(len(l) - 1, 0, -1):
-    for j in range(0, i):
-        binIdx = binSearch(l2, l[i] - l[j])
-        if binIdx != -1:
-            ret = l[i]
-            break
-    if ret != 0:
-        break
+for i in range(n):
+    for j in range(i, n):
+        target = u[j] - u[i]
+        if bin_search(target):
+            res = max(res, u[j])
 
-print(ret)
+print(res)
